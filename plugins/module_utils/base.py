@@ -10158,33 +10158,9 @@ class SchemaParameterAction(argparse.Action):
     parse_unicode_line = parse_unicode
     parse_unicode_title = parse_unicode
 
-    def parse_file(self, parameter, value):
-        return str(value)
-
-    def parse_date(self, parameter, value):
-        # the server already has a good date parser, and to parse it well
-        # ourselves we'd have to depend on the "dateutil" package...
-        return value
-
     def parse_boolean(self, parameter, value):
         # This is only used for required arguments
         return value == "true"
-
-    def parse_list(self, parameter, value):
-        """Parse a comma-separated list of values converting it to a C{list}.
-
-        Items can contain escaped commas as "\\," and they will be unescaped
-        by this method.
-        """
-
-        items = _parse_csv_list_safely(value)
-        return [
-            self.parse_argument(parameter["item"], list_item)
-            # TODO: check if list(...) should be used
-            # list(self.parse_argument(parameter["item"], list_item))
-            for list_item in items
-            if list_item != ""
-        ]
 
     def parse_mapping(self, parameter, value):
         """Parse a comma-separated list of key/value pairs into a dict.

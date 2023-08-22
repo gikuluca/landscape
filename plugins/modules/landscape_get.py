@@ -80,7 +80,7 @@ class LandscapeApiGet:
                                        'get_package_profiles', 'get_removal_profiles', 'get_distributions',
                                        'get_apt_sources', 'get_access_groups', 'get_permissions', 'get_roles',
                                        'get_event_log']),
-                query=dict(required=False, type='str', default='')
+                # query=dict(required=False, type='str', default=None)
             )
         )
         self.landscape_url = self.module.params.get('landscape_url')
@@ -88,7 +88,7 @@ class LandscapeApiGet:
         self.landscape_secret = self.module.params.get('landscape_secret')
         self.landscape_ca = self.module.params.get('landscape_ca_path')
         self.functions_local = self.module.params.get('function')
-        self.query = self.module.params.get('query')
+        # self.query = self.module.params.get('query')
 
         self.result = None
 
@@ -98,7 +98,7 @@ def main():
 
     api = API(lsc.landscape_url, lsc.landscape_key, lsc.landscape_secret, lsc.landscape_ca)
     try:
-        lsc.result = eval('api.%s(query=%s)' % (lsc.functions_local, lsc.query))
+        lsc.result = eval('api.%s()' % (lsc.functions_local))#, lsc.query))
     except HTTPError as e:
         lsc.module.fail_json("\nGot server error:\n"
                              "Code: %d\n"
