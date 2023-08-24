@@ -6,6 +6,7 @@ requires_ansible: '>=2.9.10'
 action_groups:
     landscape:
       - landscape_get
+      - landscape_computer_remove
 
 # Content that Ansible needs to load from another location or that has
 # been deprecated/removed
